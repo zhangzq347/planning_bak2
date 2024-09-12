@@ -120,6 +120,7 @@ bool Rerouting::ChangeLaneFailRerouting() {
   return true;
 }
 
+// @zzq
 bool Rerouting::LaneBorrowFailRerouting() {
   auto* rerouting = injector_->planning_context()
                         ->mutable_planning_status()
@@ -152,6 +153,7 @@ bool Rerouting::LaneBorrowFailRerouting() {
   is_rerouting_ = true;
   return true;
 }
+// @zzq
 
 Status Rerouting::ApplyRule(Frame* const frame,
                             ReferenceLineInfo* const reference_line_info) {
@@ -161,10 +163,14 @@ Status Rerouting::ApplyRule(Frame* const frame,
     return Status(common::PLANNING_ERROR,
                   "In un-successful lane change case, rerouting failed");
   }
+
+  // @zzq
   if (!LaneBorrowFailRerouting()) {
     return Status(common::PLANNING_ERROR,
                   "In un-successful lane change case, rerouting failed");
   }
+  // @zzq
+  
   return Status::OK();
 }
 

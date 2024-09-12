@@ -49,7 +49,11 @@ class Rerouting : public TrafficRule {
  private:
   ReroutingConfig config_;
   bool ChangeLaneFailRerouting();
+
+  // @zzq
   bool LaneBorrowFailRerouting();
+  // @zzq
+  
   bool is_rerouting_ = false;
   ReferenceLineInfo* reference_line_info_ = nullptr;
   Frame* frame_ = nullptr;

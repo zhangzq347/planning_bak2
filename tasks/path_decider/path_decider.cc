@@ -255,9 +255,13 @@ ObjectStop PathDecider::GenerateObjectStopDecision(
 
   double stop_distance = obstacle.MinRadiusStopDistance(
       VehicleConfigHelper::GetConfig().vehicle_param());
+  
+  // @zzq
   if (obstacle.Id() == "7366") {
     stop_distance = stop_distance - 1.8;
   }
+  // @zzq
+  
   object_stop.set_reason_code(StopReasonCode::STOP_REASON_OBSTACLE);
   object_stop.set_distance_s(-stop_distance);
 

@@ -52,6 +52,7 @@ Status TrafficLight::ApplyRule(Frame* const frame,
                                ReferenceLineInfo* const reference_line_info) {
   MakeDecisions(frame, reference_line_info);
 
+  // @zzq
   auto reference_line = reference_line_info->mutable_reference_line();
   const auto& map_path = reference_line->map_path();
   for (const auto& junction : map_path.junction_overlaps()) {
@@ -63,6 +64,7 @@ Status TrafficLight::ApplyRule(Frame* const frame,
   for (const auto& speed_bump : map_path.speed_bump_overlaps()) {
     reference_line->AddSpeedLimit(speed_bump.start_s - 2.5, speed_bump.end_s + 1.5, 2.6);
   }
+  // @zzq
 
   return Status::OK();
 }
@@ -94,6 +96,7 @@ void TrafficLight::MakeDecisions(Frame* const frame,
   const std::vector<PathOverlap>& traffic_light_overlaps =
       reference_line_info->reference_line().map_path().signal_overlaps();
   
+  // @zzq
   std::string left_turn_id = "451089192";
   double start_left_s = -1000;
   for (const auto& traffic_light_overlap : traffic_light_overlaps) {
@@ -102,16 +105,21 @@ void TrafficLight::MakeDecisions(Frame* const frame,
       start_left_s = traffic_light_overlap.start_s;
     }
   }
+  // @zzq
 
   for (const auto& traffic_light_overlap : traffic_light_overlaps) {
     if (traffic_light_overlap.end_s <= adc_back_edge_s) {
       continue;
     }
+
+    // @zzq
     if (traffic_light_overlap.object_id == left_turn_id &&
         traffic_light_overlap.end_s < start_left_s) {
       continue;
     }
+    // @zzq
 
+    // @zzq
     // // check if traffic-light-stop already finished, set by scenario/stage
     // bool traffic_light_done = false;
     // for (const auto& done_traffic_light_overlap_id :
@@ -124,6 +132,7 @@ void TrafficLight::MakeDecisions(Frame* const frame,
     // if (traffic_light_done) {
     //   continue;
     // }
+    // @zzq
 
     // work around incorrect s-projection along round routing
     static constexpr double kSDiscrepanceTolerance = 10.0;

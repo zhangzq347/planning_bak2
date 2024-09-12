@@ -158,7 +158,11 @@ void Crosswalk::MakeDecisions(Frame* const frame,
               config_.start_watch_timer_distance()) {
         // check on stop timer for static pedestrians/bicycles
         // if NOT on_lane ahead of adc
+
+        // @zzq
         const double kMaxStopSpeed = 0.2;
+        // @zzq
+        
         auto obstacle_speed = std::hypot(perception_obstacle.velocity().x(),
                                          perception_obstacle.velocity().y());
         if (obstacle_speed <= kMaxStopSpeed) {
